@@ -22,4 +22,12 @@
     <ItemGroup>
       <Content Remove="Controllers\Create.cshtml" />
     </ItemGroup>
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\_ViewStart.cshtml" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Areas\Identity" />
+      <Folder Include="Data\Migrations" />
+      <Folder Include="Migrations" />
+    </ItemGroup>
 </Project>

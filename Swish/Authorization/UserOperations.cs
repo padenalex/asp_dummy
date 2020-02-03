@@ -29,6 +29,6 @@ namespace Swish.Authorization
 
         public static readonly string UserAdministratorsRole = 
             "Administrators";
-        //public static readonly string UserManagersRole = "Managers";
+        public static readonly string UserManagersRole = "Managers";
     }
 }

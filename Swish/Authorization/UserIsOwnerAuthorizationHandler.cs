@@ -30,12 +30,7 @@ namespace Swish.Authorization
 
             // If not asking for CRUD permission, return.
 
-            if (requirement.Name != Constants.CreateOperationName &&
-                requirement.Name != Constants.ReadOperationName   &&
-                requirement.Name != Constants.UpdateOperationName &&
-                requirement.Name != Constants.DeleteOperationName &&
-                requirement.Name != Constants.ApproveOperationName &&
-                requirement.Name != Constants.RejectOperationName)
+            if (requirement.Name != Constants.ReadOperationName)
             {
                 return Task.CompletedTask;
             }

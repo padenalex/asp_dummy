@@ -41,11 +41,15 @@ namespace Swish
                     .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
+            
             services.AddScoped<IAuthorizationHandler,
                 UserIsOwnerAuthorizationHandler>();
 
             services.AddSingleton<IAuthorizationHandler,
                 UserAdministratorsAuthorizationHandler>();
+
+            services.AddSingleton<IAuthorizationHandler,
+                UserIsManagerAuthorizationHandler>();
             
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             

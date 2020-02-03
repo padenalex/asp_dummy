@@ -27,8 +27,8 @@ namespace Swish
                     var context = services.GetRequiredService<ApplicationDbContext>();
                     context.Database.Migrate();
                     var config = host.Services.GetRequiredService<IConfiguration>();
-                    //var testUserPw = "Password1*";
-                    //SeedData.Initialize(services, testUserPw).Wait();
+                    var testUserPw = "Password1*";
+                    SeedData.Initialize(services, testUserPw).Wait();
                 }
                 catch (Exception ex)
                 {

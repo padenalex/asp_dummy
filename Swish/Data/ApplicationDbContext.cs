@@ -15,5 +15,7 @@ namespace Swish.Data
         }
         
         public DbSet<VerificationProfile> VerificationProfiles { get; set; }
+        public DbSet<IdClaimManager> IdClaimManagers { get; set; }
+        public DbSet<ManagerIds> ManagerIds { get; set; }
     }
 }

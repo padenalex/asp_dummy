@@ -10,39 +10,88 @@
     <title>@ViewData["Title"] - Swish</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/side.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                @if (SignInManager.IsSignedIn(User))
-                {
-                    <a class="navbar-brand" asp-area="" asp-controller="Id" asp-action="Index">Swish</a>
-                }
-                @if (!SignInManager.IsSignedIn(User))
-                {
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Swish</a>
-                }
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <a class="navbar-brand" asp-area="" asp-controller="Id" asp-action="Index">Swish</a>
+            }
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Swish</a>
+            }
                 
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial"/>
-                    <ul class="navbar-nav flex-grow-1">
-                        @if (!SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Id" asp-action="Index">Dashboard</a>
-                            </li>
-                        }
-                            </ul>
-                </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <partial name="_LoginPartial"/>
+                <ul class="navbar-nav flex-grow-1">
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Id" asp-action="Index">Dashboard</a>
+                        </li>
+                    }
+                </ul>
             </div>
-        </nav>
-    </header>
-    <div class="container">
+        </div>
+    </nav>
+</header>
+   
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                <a href="#">
+                    Start Bootstrap
+                </a>
+            </li>
+            <li>
+                <a href="#">Overview</a>
+            </li>
+            <li>
+                <a href="#">New User</a>
+            </li>
+            <li>
+                <a href="#">Manage Users</a>
+            </li>
+            <li>
+                <a href="#">Analytics</a>
+            </li>
+            <li>
+                <a href="#">API</a>
+            </li>
+            <li>
+                <a href="#">Services</a>
+            </li>
+            <li>
+                <a href="#">Contact</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+         <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+
+    
+<div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

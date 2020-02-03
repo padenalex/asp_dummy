@@ -19,6 +19,13 @@ namespace Swish.Data
                 var adminID = await EnsureUser(serviceProvider, testUserPw, "admin@test.com");
                 await EnsureRole(serviceProvider, adminID, Constants.UserAdministratorsRole);
                 
+                var managerID = await EnsureUser(serviceProvider, testUserPw, "manager@test.com");
+                await EnsureRole(serviceProvider, managerID, Constants.UserManagersRole);
+                
+                var userID = await EnsureUser(serviceProvider, testUserPw, "user@test.com");
+                //await EnsureRole(serviceProvider, managerID, Constants.UserManagersRole);
+                
+                
                 SeedDB(context, adminID);
             }
         }
@@ -89,35 +96,35 @@ namespace Swish.Data
                     LastName = "bob",
                     FakeImgStr = "fdfdf",
                     Status = VerificationProfileStatus.Approved,
-                    OwnerId = adminID
+                    MId = adminID
                 }, new VerificationProfile
                 {
                     FirstName = "Debra",
                     LastName = "saaab",
                     FakeImgStr = "fdfdsadasdasdf",
                     Status = VerificationProfileStatus.Approved,
-                    OwnerId = adminID
+                    MId = adminID
                 }, new VerificationProfile
              {
                      FirstName = "ssssssra",
                      LastName = "sdddd",
                      FakeImgStr = "cxvvv",
                      Status = VerificationProfileStatus.Approved,
-                     OwnerId = adminID
+                     MId = adminID
                  }, new VerificationProfile
              {
                  FirstName = "car",
                  LastName = "sead",
                  FakeImgStr = "rewweer",
                  Status = VerificationProfileStatus.Approved,
-                 OwnerId = adminID
+                 MId = adminID
              }, new VerificationProfile
              {
                  FirstName = "joe",
                  LastName = "bob",
                  FakeImgStr = "sdddddddd",
                  Status = VerificationProfileStatus.Approved,
-                 OwnerId = adminID
+                 MId = adminID
              }
              );
             context.SaveChanges();
