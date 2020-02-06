@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Identity;
 namespace Swish.Authorization
 {
     public class UserIsManagerAuthorizationHandler :
-        AuthorizationHandler<OperationAuthorizationRequirement, VerificationProfile>
+        AuthorizationHandler<OperationAuthorizationRequirement, VerifUser>
     {
         protected override Task
             HandleRequirementAsync(AuthorizationHandlerContext context,
                 OperationAuthorizationRequirement requirement,
-                VerificationProfile resource)
+                VerifUser resource)
         {
             if (context.User == null || resource == null)
             {

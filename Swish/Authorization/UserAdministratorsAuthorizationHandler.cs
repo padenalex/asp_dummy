@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Authorization.Infrastructure;
 namespace Swish.Authorization
 {
     public class UserAdministratorsAuthorizationHandler
-        : AuthorizationHandler<OperationAuthorizationRequirement, VerificationProfile>
+        : AuthorizationHandler<OperationAuthorizationRequirement, VerifUser>
     {
         protected override Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
             OperationAuthorizationRequirement requirement, 
-            VerificationProfile resource)
+            VerifUser resource)
         {
             if (context.User == null)
             {

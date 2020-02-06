@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using Swish.Models;
 
 namespace Swish.Data
@@ -14,8 +16,10 @@ namespace Swish.Data
         {
         }
         
-        public DbSet<VerificationProfile> VerificationProfiles { get; set; }
-        public DbSet<IdClaimManager> IdClaimManagers { get; set; }
-        public DbSet<ManagerIds> ManagerIds { get; set; }
+        public DbSet<VerifUser> VerifUsers { get; set; }
+        public DbSet<VerifManager> VerifManagers { get; set; }
+        public DbSet<UserClaim> UserClaims { get; set; }
+        public DbSet<ManagerClaim> ManagerClaims { get; set; }
+
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace Swish.Controllers
 
         }
 
-        private IList<VerificationProfile> VerificationProfiles { get; set; }
+        private IList<VerifUser> VerifUsers { get; set; }
 
         // GET: Index (all allowed profiles)
         [HttpGet]
@@ -40,36 +41,32 @@ namespace Swish.Controllers
             if (ModelState.IsValid)
             {
                 var currentUserId = _userManager.GetUserId(User);
-                
-                var MIds = from m in _context.ManagerIds select m;
-                var MId = currentUserId;
-                
-                var MClaim = (from c in _context.IdClaimManagers select c)
-                    .Where(c => c.M.M.Id == MId);
+
+                var managerId = (from c in _context.VerifManagers
+                        .Where(a => a.UserId == currentUserId)
+                    select c.Id).FirstOrDefaultAsync().Result;
 
                 var isAuthorized = User.IsInRole(Constants.UserAdministratorsRole);
+
+                IQueryable<VerifUser> verifUsers;
                 if (isAuthorized)
                 {
-                    var verificationProfiles = from c in _context.VerificationProfiles
-                        select c;
+                    verifUsers = from c in _context.VerifUsers select c;
                 }
-
-                if (!isAuthorized)
+                else
                 {
-                    var claims = (from c in MClaim.UIDs select c);
-
+                    verifUsers = (from c in _context.ManagerClaims.Where(m => m.ManagerId == managerId)
+                        select c.User).DefaultIfEmpty();
                 }
 
-                VerificationProfiles = await verificationProfiles.ToListAsync();
-
-                return View(VerificationProfiles);
+                VerifUsers = await verifUsers.ToListAsync();
+                
+                return View(VerifUsers);
             }
 
             return View();
         }
-
-
-
+/*
         // GET: Id/Create
         [HttpGet]
         //[Authorize(Roles="Managers")]
@@ -81,15 +78,16 @@ namespace Swish.Controllers
         // POST: Id/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles="Managers, Administrators")]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,FakeImgStr")]
-            VerificationProfile verificationProfile)
+            VerifUser verificationProfile)
         {
             if (ModelState.IsValid)
             {
-                verificationProfile.MIds.Add(_userManager.GetUserId(User));
+                verificationProfile = _userManager.GetUserId(User);
                 var isAuthorized = await _authorizationService.AuthorizeAsync(User, verificationProfile,
                     UserOperations.Create);
 
@@ -108,8 +106,13 @@ namespace Swish.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+*/
     }
+    
+    
+    
+    
+    
     
     /*
      // GET: Id/Details/5

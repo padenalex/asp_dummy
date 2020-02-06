@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.WebEncoders.Testing;
 
 namespace Swish.Data
 {
@@ -23,10 +26,10 @@ namespace Swish.Data
                 await EnsureRole(serviceProvider, managerID, Constants.UserManagersRole);
                 
                 var userID = await EnsureUser(serviceProvider, testUserPw, "user@test.com");
-                //await EnsureRole(serviceProvider, managerID, Constants.UserManagersRole);
+                //await EnsureRole(serviceProvider, userID, Constants.ReadOperationName);
                 
                 
-                SeedDB(context, adminID);
+                SeedDB(context, adminID, managerID, userID);
             }
         }
 
@@ -83,50 +86,81 @@ namespace Swish.Data
             return IR;
         }
 
-        public static void SeedDB(ApplicationDbContext context, string adminID)
+        public static void SeedDB(ApplicationDbContext context, string adminID, string managerID, string UserID)
         {
-            if (context.VerificationProfiles.Any())
+            if (context.VerifUsers.Any())
             {
                 return;   // DB has been seeded
             }
 
-            context.VerificationProfiles.AddRange(new VerificationProfile
+            context.VerifUsers.AddRange(new VerifUser
                 {
-                    FirstName = "Debra",
+                    Id = 1,
+                    UserId = adminID,
+                    FirstName = "admin",
+                    LastName = "sdf",
+                    FakeImgStr = "aaaaaaa",
+                    Status = VerificationProfileStatus.Approved
+                }, new VerifUser
+                {
+                    Id = 2, 
+                    UserId = managerID,
+                    FirstName = "mang",
+                    LastName = "sead",
+                    FakeImgStr = "rewweer",
+                    Status = VerificationProfileStatus.Approved
+                }, new VerifUser
+                {
+                    Id = 3,
+                    UserId = UserID,
+                    FirstName = "user",
                     LastName = "bob",
-                    FakeImgStr = "fdfdf",
-                    Status = VerificationProfileStatus.Approved,
-                    MId = adminID
-                }, new VerificationProfile
+                    FakeImgStr = "sdddddddd",
+                    Status = VerificationProfileStatus.Approved
+                }
+            );
+            
+            context.VerifManagers.AddRange(new VerifManager
                 {
-                    FirstName = "Debra",
-                    LastName = "saaab",
-                    FakeImgStr = "fdfdsadasdasdf",
-                    Status = VerificationProfileStatus.Approved,
-                    MId = adminID
-                }, new VerificationProfile
-             {
-                     FirstName = "ssssssra",
-                     LastName = "sdddd",
-                     FakeImgStr = "cxvvv",
-                     Status = VerificationProfileStatus.Approved,
-                     MId = adminID
-                 }, new VerificationProfile
-             {
-                 FirstName = "car",
-                 LastName = "sead",
-                 FakeImgStr = "rewweer",
-                 Status = VerificationProfileStatus.Approved,
-                 MId = adminID
-             }, new VerificationProfile
-             {
-                 FirstName = "joe",
-                 LastName = "bob",
-                 FakeImgStr = "sdddddddd",
-                 Status = VerificationProfileStatus.Approved,
-                 MId = adminID
-             }
-             );
+                    UserId = adminID,
+                    Name = "adminCo"
+                }, new VerifManager 
+                {
+                    UserId = managerID,
+                    Name = "ManagerCo"
+                }
+            );
+            
+            context.ManagerClaims.AddRange(new ManagerClaim
+                {
+                    ManagerId = 1,
+                    UserId = 2
+                }, new ManagerClaim
+                {
+                    ManagerId = 1,
+                    UserId = 3
+                }, new ManagerClaim
+                {
+                    ManagerId = 2,
+                    UserId = 3
+                }
+            );
+            
+            context.UserClaims.AddRange(new UserClaim
+                {
+                    UserId = 2,
+                    ManagerId = 1
+                }, new UserClaim
+                {
+                    UserId = 3,
+                    ManagerId = 1
+                }, new UserClaim
+                {
+                    UserId = 3,
+                    ManagerId = 2
+                }
+            );
+
             context.SaveChanges();
         }
     }

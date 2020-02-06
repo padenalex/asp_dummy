@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Swish.Authorization
 {
     public class UserIsOwnerAuthorizationHandler
-        : AuthorizationHandler<OperationAuthorizationRequirement, VerificationProfile>
+        : AuthorizationHandler<OperationAuthorizationRequirement, VerifUser>
     {
         UserManager<IdentityUser> _userManager;
 
@@ -21,7 +21,7 @@ namespace Swish.Authorization
         protected override Task
             HandleRequirementAsync(AuthorizationHandlerContext context,
                 OperationAuthorizationRequirement requirement,
-                VerificationProfile resource)
+                VerifUser resource)
         {
             if (context.User == null || resource == null)
             {
@@ -35,10 +35,10 @@ namespace Swish.Authorization
                 return Task.CompletedTask;
             }
 
-            if (resource.OwnerId == _userManager.GetUserId(context.User))
-            {
-                context.Succeed(requirement);
-            }
+           // if (resource. == _userManager.GetUserId(context.User))
+           // {
+           //     context.Succeed(requirement);
+            //}
 
             return Task.CompletedTask;
         }
